@@ -67,7 +67,7 @@ function build_flink_parcel {
   tar zcvhf ./$flink_built_folder/$flink_parcel_name $flink_parcel_folder --owner=root --group=root
   java -jar cm_ext/validator/target/validator.jar -f ./$flink_built_folder/$flink_parcel_name
   python cm_ext/make_manifest/make_manifest.py ./$flink_built_folder
-  sha1sum ./$flink_built_folder/$flink_parcel_name |awk '{print $1}' > ./$flink_built_folder/${flink_parcel_name}.sha
+  echo -n $(sha1sum ./$flink_built_folder/$flink_parcel_name |awk '{print $1}') > ./$flink_built_folder/${flink_parcel_name}.sha
 }
 
 function build_flink_csd_on_yarn {
