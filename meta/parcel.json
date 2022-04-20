@@ -23,7 +23,7 @@
 		"flink": {
 			"longname": "Flink",
 			"home": "/var/lib/flink",
-			"shell": "/bin/bash",
+			"shell": "/sbin/nologin",
 			"extra_groups": []
 		}
 	},

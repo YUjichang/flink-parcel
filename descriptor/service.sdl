@@ -552,6 +552,23 @@
           "default": "1000",
           "type": "long",
           "required": "true"
+        },
+
+        {
+          "name": "rest_bind_port",
+          "label": "Rest Bind Port",
+          "description": "he Port range for the REST and web server to bind to.",
+          "configName": "rest.bind-port",
+          "default": "8080-8090",
+          "type": "string"
+        },
+        {
+          "name": "classloader_check-leaked-classloader",
+          "label": "Classloader check-leaked-classloader",
+          "description": "Set classloader.check-leaked-classloader ture or false.",
+          "configName": "classloader.check-leaked-classloader",
+          "default": "false",
+          "type": "boolean"
         }
     ],
     "rolesWithExternalLinks": [
@@ -761,7 +778,9 @@
                         "pipeline_generic_types",
                         "pipeline_object_reuse",
                         "infer_source_parallelism",
-                        "infer_source_parallelism_max"
+                        "infer_source_parallelism_max",
+                        "rest_bind_port",
+                        "classloader_check-leaked-classloader"
                     ],
                     "additionalConfigs": [
                         {
