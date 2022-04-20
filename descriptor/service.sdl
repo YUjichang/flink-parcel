@@ -553,7 +553,6 @@
           "type": "long",
           "required": "true"
         },
-
         {
           "name": "rest_bind_port",
           "label": "Rest Bind Port",
