@@ -44,6 +44,14 @@
     ],
     "hdfsDirs": [
         {
+            "name": "CreateFlinkUserDirCommand",
+            "label": "Create Flink User Dir",
+            "description": "Creates the Flink user directory in HDFS.",
+            "directoryDescription": "Flink HDFS user directory",
+            "path": "/user/${principal}",
+            "permissions": "0751"
+        },
+        {
             "name": "CreateJobManagerArchiveDirCommand",
             "label": "Create JobManager Archive Directory",
             "description": "Creates the directory in HDFS where application history will be stored.",
@@ -78,6 +86,9 @@
     ],
     "serviceInit": {
         "preStartSteps": [
+            {
+                "commandName": "CreateFlinkUserDirCommand"
+            },
             {
                 "commandName": "CreateStateCheckpointsDirCommand"
             },
