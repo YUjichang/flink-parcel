@@ -49,7 +49,7 @@
             "description": "Creates the Flink user directory in HDFS.",
             "directoryDescription": "Flink HDFS user directory",
             "path": "/user/${principal}",
-            "permissions": "0751"
+            "permissions": "0755"
         },
         {
             "name": "CreateJobManagerArchiveDirCommand",
@@ -114,11 +114,11 @@
             "configurableInWizard": true
         },
         {
-            "name": "jobmanager_heap_size",
-            "label": "JobManager Heap Size",
-            "description": "JVM heap size for the JobManager",
-            "configName": "jobmanager.heap.size",
-            "default": "1073741824",
+            "name": "jobmanager_memory_process_size",
+            "label": "JobManager Process Memory Size",
+            "description": "This includes all the memory of the JobManager, consisting of Total Flink Memory, JVM Metaspace, and JVM Overhead. On containerized setups, this should be set to the container memory.",
+            "configName": "jobmanager.memory.process.size",
+            "default": "2147483648",
             "type": "memory",
             "unit": "bytes",
             "required": "true"
@@ -161,11 +161,11 @@
             "required": "true"
         },
         {
-            "name": "yarn_maximum_failed_containers",
-            "label": "Maximum Failed Containers for YARN",
-            "description": "Maximum number of containers the system is going to reallocate in case of a failure.",
-            "configName": "yarn.maximum-failed-containers",
-            "default": "100",
+            "name": "yarn_application_attempt_failures_validity_interval",
+            "label": "Yarn Application Attempt Failures Validity Interval",
+            "description": "Time window in milliseconds which defines the number of application attempt failures when restarting the AM. Failures which fall outside of this window are not being considered. Set this value to -1 in order to count globally. See here for more information.",
+            "configName": "yarn.application-attempt-failures-validity-interval",
+            "default": "10000",
             "type": "long",
             "required": "false"
         },
@@ -179,12 +179,13 @@
             "required": "false"
         },
         {
-            "name": "yarn_container_start_command_template",
-            "label": "Yarn Container Command template",
-            "description": "Specifies the command template for yarn container starts. Should only be overriden by expert users.",
-            "configName": "yarn.container-start-command-template",
-            "default": "%java% %jvmmem% %jvmopts% -DyarnContainerId=$CONTAINER_ID %logging% %class% %args% %redirects%",
-            "type": "string",
+            "name": "yarn_application_priority",
+            "label": "Yarn Application Priority",
+            "description": "A non-negative integer indicating the priority for submitting a Flink YARN application. It will only take effect if YARN priority scheduling setting is enabled. Larger integer corresponds with higher priority. If priority is negative or set to '-1'(default), Flink will unset yarn priority setting and use cluster default priority. Please refer to YARN's official documentation for specific settings required to enable priority scheduling for the targeted YARN version.
+",
+            "configName": "yarn.application.priority",
+            "default": "-1",
+            "type": "long",
             "required": "false"
         },
         {
@@ -567,7 +568,7 @@
         {
           "name": "rest_bind_port",
           "label": "Rest Bind Port",
-          "description": "he Port range for the REST and web server to bind to.",
+          "description": "The Port range for the REST and web server to bind to.",
           "configName": "rest.bind-port",
           "default": "8080-8090",
           "type": "string"
@@ -747,7 +748,7 @@
                     "includedParams": [
                         "execution.target",
                         "parallelism_default",
-                        "jobmanager_heap_size",
+                        "jobmanager_memory_process_size",
                         "taskmanager_memory_process_size",
                         "taskmanager_managed_memory_fraction",
                         "taskmanager_network_memory_fraction",
@@ -755,10 +756,10 @@
                         "taskmanager_number_of_task_slots",
                         "env_java_opts_taskmanager",
                         "env_java_opts_jobmanager",
-                        "yarn_maximum_failed_containers",
+                        "yarn_application_attempt_failures_validity_interval",
                         "yarn_application_attempts",
                         "yarn_tags",
-                        "yarn_container_start_command_template",
+                        "yarn_application_priority",
                         "checkpointing_interval",
                         "checkpointing_mode",
                         "externalized_checkpoint_retention",
